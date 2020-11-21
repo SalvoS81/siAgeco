@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block stylesheets %}
+    {{ block.super }}
+
+    <link rel="stylesheet" type="text/css" href="{% static '/vista/public/css/griglia.css' %}">
+{% endblock %}
+
+{% block extra_head %}
+{{ block.super }}
+{% endblock %}
+
+{% block title %}Griglia Polo{% endblock %}
+{% block content %}  
+    <div class="row">              
+        <div class="col-md-12">
+            {% include 'vista/layout/_griglia_polo_div.html' %}           
+        </div>   
+    </div>
+{% endblock %}
+
+{% block extra_foot %}
+{{ block.super }} 
+{{ filter.form.media }}
+{% endblock %}

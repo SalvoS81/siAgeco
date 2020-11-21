@@ -1,0 +1,148 @@
+
+<div class="row"> <!-- filtro -->
+    <div class="col-md-12">  
+        <div class="box box-primary collapsed-box">       
+            <div class="box-header with-border">
+                <h3 class="box-title">Filtra</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                    </button>
+                </div>
+                <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <!-- form start -->
+                <form role="form" method="get">
+                    <div class="box-body">
+                        {{ filter.form.non_field_errors }}
+                        <div class="row">  
+                            <div class="form-group">                                                                                     
+                                <div class="col-md-4"> {{ filter.form.polo.label_tag }}<br><h4>{{ filter.form.polo }}</h4></div>                            
+                                <div class="col-md-4"> {{ filter.form.linea.label_tag }}<br><h4>{{ filter.form.linea }}</h4></div>
+                                <div class="col-md-4"> {{ filter.form.data_servizio.label_tag }}<br><h4>{{ filter.form.data_servizio }}</h4></div>
+                            </div>                  
+                        </div>
+                        <div class="row">
+                            {{ filter.form.polo.errors }}
+                            {{ filter.form.linea.errors }}  
+                            {{ filter.form.data_servizio.errors }}                    
+                        </div>
+                    </div>               
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary col-xs-6 pull-right">Aggiorna</button>
+                    </div>       
+                </form>
+            </div>
+            <!-- /.box-body -->        
+        </div>
+    </div>
+</div>
+
+<div class="row"> <!-- griglia -->
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Personale di Servizio nel polo {{ filter.form.polo.value }} il {{ filter.form.data_servizio.value }}</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                {% regroup filter.qs by nastro.linea as nastri_by_linea %}
+                {% regroup turnieffettivi by linea as effettivi_by_linea %}
+                <div class="row ">
+                    <div class="col-md-12">
+                        {% for linea in nastri_by_linea %}
+                            <h4>{{ linea.grouper }}</h4>                            
+                            <div class="row bordo-linea">
+                                <div class="col-md-12">
+                                    {% regroup linea.list by nastro.treno as linea_by_treno %}                                   
+                                    {% for treno in linea_by_treno %}
+                                        <div class="row bordo-treno">
+                                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">                                            
+                                                <h5>{{ treno.grouper}} </h5>
+                                                <h6 id="vettura">--</h6>
+                                            </div>
+                                            <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+                                                <div class="row">                                                     
+                                                    {% for obj in treno.list %}
+                                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                                                            <table style="width:100%">
+                                                                <tr class="bordo-turno" style="width:100%">
+                                                                    <td style="width:45%">{{ obj.operatore}}</td>
+                                                                    <td style="width:45%">{{ obj.nastro.vista_semplice }}</td>
+                                                                    <td style="width:10%">
+                                                                        <!-- stato -->
+                                                                        <a href="{% url 'turno_programmato_update' obj.id%}?next={{ request.path }}" 
+                                                                            class="btn btn-block 
+                                                                            {% if obj.stato.stato == 'Assente' %}
+                                                                                btn-danger 
+                                                                            {% elif obj.stato.stato == 'Non Avvisa' %}
+                                                                                btn-danger
+                                                                            {% elif obj.stato.stato == 'Presente' %}
+                                                                                btn-success
+                                                                            {% elif obj.stato.stato == 'Inoperoso' %}
+                                                                                bg-navy
+                                                                            {% elif obj.stato.stato == 'In transito' %}
+                                                                                bg-aqua
+                                                                            {% elif obj.stato.stato == 'Cambio' %}
+                                                                                bg-purple
+                                                                            {% elif obj.stato.stato == 'Presente 6:30' or obj.stato.stato == 'Presente 4:30'%}
+                                                                                btn-warning 
+                                                                            {% else%}
+                                                                                btn-info
+                                                                            {% endif %}                                                                                        
+                                                                            btn-xs">{% if obj.stato is not none %} {{ obj.stato }} {% else %} <i class="fa fa-fw fa-question"></i> {% endif %}
+                                                                        </a> 
+                                                                    </td>
+                                                                </tr>
+                                                            </table>                                                          
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                                <div class="row riga-effettivi">                                                
+                                                    {% for lineae in effettivi_by_linea %}
+                                                        {% if lineae.grouper == linea.grouper %}
+                                                            {% regroup lineae.list by treno as lineae_by_treno %}
+                                                            {% for trenoe in lineae_by_treno %}
+                                                                {% if trenoe.grouper == treno.grouper %}
+                                                                    {% for obj in trenoe.list %}
+                                                                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                                                                            <table style="width:100%">
+                                                                                {% if obj.stato.stato == 'Non Avvisa' or obj.stato.stato == 'Assente' or obj.stato.stato == 'Cambio' %}
+                                                                                    <tr class="assente" style="width:100%">
+                                                                                {% else %}
+                                                                                    <tr class="" style="width:100%">
+                                                                                {% endif %}
+                                                                                        <td style="width:45%">{{ obj.operatore}}</td>
+                                                                                        <td style="width:45%">{{ obj.vista_semplice }}</td>
+                                                                                        <td style="width:10%">
+                                                                                            <a href="{% url 'turno_effettivo_update' obj.id%}?next={{ request.path }}"  class="btn btn-default"><i class="fa fa-edit"></i></button>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                            </table>                                                          
+                                                                        </div>
+                                                                    {% endfor %}
+                                                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                                                                        <a href="" class="btn btn-default btn-info"> <i class="fa fa-plus"></i></a>
+                                                                    </div>
+                                                                {% endif %}
+                                                            {% endfor %}        
+                                                        {% endif %}    
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}                                       
+                                    
+                                </div>
+                            </div>                        
+                        {% endfor %}
+                    </div>
+                </div>
+                
+            </div>
+        <!-- /.box-body -->
+        </div> 
+    </div>            
+</div>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>test</title>
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css" />
+
+	<link rel="stylesheet" href="css/style.css" />
+
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script type="text/javascript" src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script type="text/javascript" src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+	<div class="container">
+    <table>
+      <tr id="titolo">
+        <th style="border:none;"></th>
+        <th>L</th>
+        <th>M</th>
+        <th>M</th>
+        <th>G</th>
+        <th>V</th>
+        <th>S</th>
+        <th>D</th>
+      <tr>
+        <th>wk1</th>
+        <td class="btn-multistato" data-dati="A,B,C" data-i='2'>T</td>
+        <td class="btn-multistato" data-dati="D,E,F" data-i='1'>T</td>
+        <td class="btn-multistato" data-dati="" data-i=''></td>
+        <td class="btn-multistato" data-dati="" data-i=''></td>
+        <td class="btn-multistato" data-dati="" data-i=''></td>
+        <td class="btn-multistato" data-dati="" data-i=''></td>
+        <td class="btn-multistato" data-dati="" data-i=''></td>
+      </tr>
+      <tr>
+        <th>wk2</th>
+        <td class="btn-multistato" data-dati="A,B,C" data-i='2'>T</td>
+        <td class="btn-multistato" data-dati="D,E,F" data-i='1'>T</td>
+        <td class="btn-multistato" data-dati="" data-i=''></td>
+        <td class="btn-multistato" data-dati="" data-i=''></td>
+        <td class="btn-multistato" data-dati="" data-i=''></td>
+        <td class="btn-multistato" data-dati="" data-i=''></td>
+        <td class="btn-multistato" data-dati="" data-i=''></td>
+      </tr>
+    </table>
+	</div><!-- /.container -->
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+  <script>
+  $(document).ready(function(){
+
+    $('.btn-multistato').each(function () {
+        var dati = $(this).data('dati').split(',');
+        var i = $(this).data('i');
+        var l = dati.length;
+        var classe = "";
+        console.log(dati);
+        console.log(dati[i]);
+        console.log(l);
+        console.log(i);
+        if (dati[i]){
+          classe = 'btn-multistato-' + dati[i];
+          console.log(classe);
+          $(this).addClass(classe);
+          $(this).text(dati[i]);
+
+          $(this).click(function(){
+            $(this).removeClass(classe);
+            i++;
+            if ( i == l ) {i = 0;}
+            classe = 'btn-multistato-' + dati[i];
+            console.log(classe);
+            $(this).addClass(classe);
+            $(this).text(dati[i]);
+          });
+        }
+
+    });
+
+  });
+  </script>
+</body>
+</html>

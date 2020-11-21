@@ -1,0 +1,36 @@
+{% extends 'adminlte/base.html' %}
+{% load static%}
+
+{% block meta %}
+    {{ block.super }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+{% endblock %}
+
+
+{% block extra_head %}
+    {{ block.super }}
+{% endblock %}
+
+{% block title %}Ageco{% endblock %}
+
+{% block page_name %}{% endblock %}
+{% block page_description %}{% endblock %}
+
+{% block bodyclass %}fixed{% endblock %}
+
+{% block content %}
+    ...
+{% endblock %}
+
+
+{% block javascript %}
+    {{ block.super }}
+    <script type="text/javascript" src= "{% static '/vista/public/plugins/jQuery-slimScroll/jquery.slimscroll.js' %}"></script>
+{% endblock %}
+
+{% block extra_foot %}
+    {{ block.super }} 
+{% endblock %}

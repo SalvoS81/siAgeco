@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block meta %}
+    {{ block.super }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+
+    <!-- Morris charts -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+{% endblock %}
+
+
+{% block extra_head %}
+{{ block.super }}
+{% endblock %}
+
+
+{% block title %}Pannello Generale{% endblock %}
+{% block page_name %}Pannello Generale{% endblock %}
+{% block page_description %}Collegamenti e Statistiche{% endblock %}
+
+{% block content %}
+{% if request.user|is_addetto_esercizio %}
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>243</h3>
+
+                <p>Personale in servizio</p>
+            </div>
+            <div class="icon">
+                <ion-icon name="people-outline"></ion-icon>
+            </div>
+            <a href="{% url 'foglio_servizio' %}" class="small-box-footer">Altre info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+            <div class="inner">
+                <h3>101</h3>
+
+                <p>Vetture in servizio</p>
+            </div>
+            <div class="icon">              
+                <ion-icon name="bus"></ion-icon>
+            </div>
+            <a href="#" class="small-box-footer">Altre info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>90<sup style="font-size: 20px">%</sup></h3>
+
+                <p>Copertura del servizio</p>
+            </div>
+            <div class="icon">
+                <ion-icon name="pie-chart-outline"></ion-icon>
+            </div>
+            <a href="#" class="small-box-footer">Altre info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-red">
+            <div class="inner">
+                <h3>15</h3>
+
+                <p>Assenze dal servizio</p>
+            </div>
+            <div class="icon">
+                <ion-icon name="bandage-outline"></ion-icon>
+            </div>
+            <a href="#" class="small-box-footer">Altre info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    <!-- ./col -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-md-8">
+            <!-- AREA CHART -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Andamento Corse </h3>  <small class=""> Previste/Reali </small>
+
+                    <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body chart-responsive">
+                    <div class="chart" id="revenue-chart" style="height: 350px;"></div>
+                </div>
+            <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>   
+        <div class="col-md-4">
+            <!-- Info Boxes Style 2 -->
+            <div class="info-box bg-yellow">
+                <span class="info-box-icon"><ion-icon name="person-add-outline"></ion-icon></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">PERSONALE VIAGGIANTE</span>
+                    <span class="info-box-number">352 di 403</span>
+
+                    <div class="progress">
+                    <div class="progress-bar" style="width: 85%"></div>
+                    </div>
+                    <span class="progress-description">
+                        5% in meno negli ultimi 30 giorni
+                        </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+            <div class="info-box bg-green">
+                <span class="info-box-icon"><ion-icon name="bus"></ion-icon></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">VETTURE</span>
+                    <span class="info-box-number">101 di 243</span>
+
+                    <div class="progress">
+                    <div class="progress-bar" style="width: 40%"></div>
+                    </div>
+                    <span class="progress-description">
+                        20% in più negli ultimi 30 giorni
+                        </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+            <div class="info-box bg-red">
+                <span class="info-box-icon"><ion-icon name="flash-off-outline"></ion-icon></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Guasti</span>
+                    <span class="info-box-number">230</span>
+
+                    <div class="progress">
+                    <div class="progress-bar" style="width: 15%"></div>
+                    </div>
+                    <span class="progress-description">
+                        7% in meno negli ultimi 30 giorni
+                        </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+            <div class="info-box bg-aqua">
+                <span class="info-box-icon"><ion-icon name="trending-up-outline"></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Km TPL prodotti</span>
+                    <span class="info-box-number">7.505.069</span>
+
+                    <div class="progress">
+                    <div class="progress-bar" style="width: 83%"></div>
+                    </div>
+                    <span class="progress-description">
+                        11% in più negli ultimi 30 giorni
+                        </span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+    </div>
+{% endif %}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Sito dimostrativo.</h2>
+        {% if request.user|is_operatore_esercizio %}
+            <h3>Benvenuto {{ request.user.get_full_name }} </h3>
+        {% endif%}
+    </div>
+</div>
+<script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
+{% endblock %}
+
+{% block javascript %}
+    {{ block.super }}
+    {% if request.user|is_addetto_esercizio %}
+        <!-- Morris.js charts -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+        <script>
+            $(function () {
+                "use strict";
+
+                // AREA CHART
+                var area = new Morris.Area({
+                    element: 'revenue-chart',
+                    resize: true,
+                    data: [
+                        {y: '2018 Q1', item1: 2666, item2: 2666},
+                        {y: '2018 Q2', item1: 2778, item2: 2294},
+                        {y: '2018 Q3', item1: 4912, item2: 1969},
+                        {y: '2018 Q4', item1: 3767, item2: 3597},
+                        {y: '2019 Q1', item1: 6810, item2: 1914},
+                        {y: '2019 Q2', item1: 5670, item2: 4293},
+                        {y: '2019 Q3', item1: 4820, item2: 3795},
+                        {y: '2019 Q4', item1: 9073, item2: 5967},
+                        {y: '2020 Q1', item1: 10687, item2: 4460},
+                        {y: '2020 Q2', item1: 11032, item2: 5713}
+                    ],
+                    xkey: 'y',
+                    ykeys: ['item1', 'item2'],
+                    labels: ['Corse previste', 'Corse effettute'],
+                    lineColors: ['#a0d0e0', '#3c8dbc'],
+                    hideHover: 'auto'
+                });
+            });    
+        </script>
+    {% endif %}
+{% endblock %}
+
+{% block extra_foot %}
+    {{ block.super }} 
+    {{ filter.form.media }}
+{% endblock %}

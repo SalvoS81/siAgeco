@@ -1,0 +1,27 @@
+
+.bordo-linea{
+    border-bottom: 2px solid rgb(0, 0, 0);    
+}
+
+.bordo-treno{
+    border-bottom: 1px solid rgb(201, 201, 201);
+    margin-bottom: 5px;  
+}
+
+.bordo-turno{
+    border-bottom: 1px solid rgb(92, 91, 91);
+    font-weight: bold;
+}
+
+.riga-effettivi{
+    /*background-color: aliceblue;*/
+    font-weight: lighter;
+    font-style: italic;    
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.assente{
+    text-decoration: line-through red ;
+    color: red;
+}

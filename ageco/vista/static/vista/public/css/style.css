@@ -1,0 +1,135 @@
+@keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.4; }
+    to { opacity: 1.0; }
+}
+
+@-webkit-keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.4; }
+    to { opacity: 1.0; }
+}
+
+.blink {
+    animation:fade 3000ms infinite;
+    -webkit-animation:fade 3000ms infinite;
+}
+
+.agendina-text-success{
+    color: #1cd61f;
+}
+
+#titolo th{
+  text-align: center;
+  /*width: 3.0em;*/
+  border: 0.1em green;
+  border-style: none solid;
+}
+
+.btn-multistato{
+  cursor: pointer;
+  text-align: center;
+  line-height: 2.5em;
+  width: 2.5em;
+  /*background-color: blue;
+  color: white;*/
+  border: 0.1em green solid;
+}
+
+.btn-multistato-A{
+  background-color: red;
+  color: yellow;
+}
+.btn-multistato-C{
+  background-color: blue;
+  color: white;
+}
+
+.containerXX {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:center;
+    /* inline-block space fix */
+    /*/margin-right:-4px;*/
+}
+.col-max {
+    /* custom max width */
+    max-width:250px;
+}
+
+.blocca {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.sblocca {
+    pointer-events: auto;
+    border-left: thick solid blue;
+    border-right: thick solid blue;
+}
+
+.btn-vista{
+    box-shadow: 0 2px 2px rgba(0,0,0,0.5);
+    padding: 0px;
+    font-size: 3.0em;
+}
+
+#agendina_giornata_note{
+  resize: vertical;
+}
+
+.form-inline .form-control{
+    display: inline-block;
+    width: auto;
+    /*vertical-align: middle;*/
+}
+div .form-inline{
+    display: inline-block;
+}
+
+.componenti_parte{
+    display: inline-block;
+    padding-left: 0.5em;
+}
+
+.tabella_parte{
+    width: 100%;
+    text-align: center;
+    border-collapse: separate;
+}
+
+.parte_padding{
+    padding: 0.3em 0em 0.3em 0em;
+}
+
+.bordo-superiore{
+    border-color: #605ca8 !important;
+    border-style: outset;
+    border-width: 2px 2px 0px 2px;
+}
+.bordo-inferiore{
+    border-color: #605ca8 !important;
+    border-style: outset;
+    border-width: 0px 2px 2px 2px;
+}
+.contorno-box{
+    box-shadow: 0 0 10px 5px #9895c6;
+}
+.elimina-padding{
+    padding-left:  0;
+    padding-right:  0;
+}

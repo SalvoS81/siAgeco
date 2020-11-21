@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load vista_extras %}
+
+
+{% block meta %}
+    {{ block.super }}
+    <meta http-equiv="refresh" content="60">
+{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+   <style type="text/css">
+    .blink_me {
+        animation: blinker-bkg 4s linear infinite;
+    }
+
+    @keyframes blinker {
+        0%  { opacity: 0.2; }        
+        50%  { opacity: 1; }        
+        100% { opacity: 0.2; }
+    }
+
+    @keyframes blinker-bkg {
+        0%  { background-color: #fff; }        
+        50%  { background-color: #e3eaa7; }        
+        100% { background-color: #fff; }
+    }
+    </style>
+{% endblock %}
+
+
+{% block extra_head %}
+{{ block.super }}
+{% endblock %}
+
+
+{% block title %}Foglio Servizio{% endblock %}
+{% block page_name %}<i id="oraesatta" class="pull-right bg-green"> ... </i>{% endblock %}
+{% block page_description %}{% endblock %}
+
+{% block content %}  
+    <div class="row">              
+        <div class="col-md-12">
+            {% include 'vista/layout/_foglio_servizio.html' %}           
+        </div>   
+    </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12"><h3 id="aggiornata" class="text-center bg-green-active"> ... </h3></div>        
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ block.super }} 
+    <script>
+
+   
+        document.addEventListener("DOMContentLoaded", function(event) { 
+            var scrollpos = localStorage.getItem('scrollpos');
+            if (scrollpos) window.scrollTo(0, scrollpos);
+        });
+
+        window.onbeforeunload = function(e) {
+            localStorage.setItem('scrollpos', window.scrollY);
+        };
+
+        function OraMinuti(scontamento_ore = 0, scontamento_min = 0)
+        {
+            var d = new Date();
+            d.setHours(d.getHours() + scontamento_ore)
+            d.setMinutes(d.getMinutes() + scontamento_min)
+            var time = String(d.getHours());
+            var min = String(d.getMinutes());
+            if (time.length == 1) { time = "0" + time ;}        
+            if (min.length == 1) { time = time + ":0" + min ;}
+            else { time = time +":"+ min; }
+            return time;
+        }
+        
+        function Time()
+        {
+            //var date=new Date();
+            //var time=date.toLocaleTimeString();
+            var spostaora = Number($("#id_scostamento").val()); // Modifica questo valore per testare in altre ore
+            var time=OraMinuti(Number(spostaora),0);
+            return (spostaora == 0) ? time : "simulazione ore: "+ time;
+        }
+
+        var display=setInterval(function(){        
+                document.getElementById("oraesatta").innerHTML=Time();
+            },0);        
+
+        $(document).ready(function(){
+            var spostaora = Number($("#id_scostamento").val()); // Modifica questo valore per testare in altre ore
+            console.log(spostaora)
+
+            var orario = "Pagina aggiornata alle ore " + OraMinuti(spostaora, 0);
+            $("#aggiornata").text(orario);     
+
+            var ora = OraMinuti(spostaora, -10); 
+            console.log(ora);
+            var primo = true;        
+            $("table tr td:nth-child(3)").filter(function(){
+                var ora_riga = $(this).text();
+                var antecedente = ora_riga < ora;
+                //console.log(ora +" > "+ ora_riga + " esito: " + antecedente )            
+                if (antecedente) { $(this).parent().toggleClass("text-muted"); }
+                /*else if (primo){
+                        console.log("Scorri sino alle :"+ora_riga)
+                        var $container = $('html,body'),
+                            $scrollTo = $(this);
+                        // Or you can animate the scrolling:
+                        var quanto = $scrollTo.offset().top - $container.offset().top + $container.scrollTop();
+                        $container.animate({
+                            scrollTop: quanto
+                        },1000);
+                        primo = false;
+                }*/
+
+                var ora_piu_15 = OraMinuti(spostaora, 30);
+                var entro15 = (ora < ora_riga  &&  ora_riga < ora_piu_15 );
+                //console.log(ora < ora_riga);
+                //console.log(ora_riga < ora_piu_15);
+                //console.log(ora +" > "+ ora_riga + " < " + ora_piu_15 + " esito: " + entro15 )
+                if ( entro15 ) { $(this).parent().toggleClass("blink_me"); }
+                return ($(this).text() < ora);
+            });        
+        });
+    </script>
+{% endblock %}
+
+{% block extra_foot %}
+    {{ block.super }} 
+    {{ filter.form.media }}
+{% endblock %}

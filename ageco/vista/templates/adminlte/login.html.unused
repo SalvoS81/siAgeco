@@ -1,0 +1,109 @@
+{% extends "adminlte/login.html" %}
+{% load static %}
+
+{% block title %}
+    Amt - Area dipendenti
+{% endblock %}
+
+{% block stylesheets %}
+    {{ block.super }}
+    <style type="text/css">
+        body {
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 11px;
+        }
+
+        .top {
+            margin-bottom: 15px;
+        }
+
+        .buttondiv {
+            margin-top: 10px;
+        }
+
+        .messagebox {
+            position: absolute;
+            width: auto;
+            margin-left: 30px;
+            border: 1px solid #c93;
+            background: #ffc;
+            padding: 3px;
+        }
+
+        .messageboxok {
+            position: absolute;
+            width: auto;
+            margin-left: 30px;
+            border: 1px solid #349534;
+            background: #C9FFCA;
+            padding: 3px;
+            font-weight: bold;
+            color: #008000;
+        }
+
+        .messageboxerror {
+            position: absolute;
+            width: auto;
+            margin-left: 30px;
+            border: 1px solid #CC0000;
+            background: #F7CBCA;
+            padding: 3px;
+            font-weight: bold;
+            color: #CC0000;
+        }
+
+        .login-page {
+            padding-bottom: 40px;
+            background: url("{% static 'domdir/public/image/blue_paper.png' %}") repeat #444444;         
+        }
+
+        .login-box-body{
+            border:black solid 2px;
+            border-color:#00A8FF!important;
+            border-radius:5px!important;
+        }
+    </style>
+{% endblock %}
+
+{% block logo %}
+    <div class="login-logo">
+        <img src= "{% static 'vista/public/image/logo1.png' %}" class="img-thumbnail user-img" style="padding: 1px" alt="Logo">
+    </div>
+{% endblock %}
+
+{% block login_errors %}
+    <h4><p class="login-box-msg">Prego identificarsi</p></h4>
+    {{ block.super }}
+{% endblock login_errors %}
+
+{% block login_form %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {% if message %}
+            <p class="login-box-msg" style="color: red;">{{ message }}</p>
+        {% endif %}
+        <div class="form-group has-feedback">
+            <input name="username" class="form-control" placeholder="Matricola" required="" maxlength="5" class="form-control" pattern="[0-9]*">
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+            <input type="password" name="password" class="form-control" placeholder="Pin" required="" maxlength="6" class="form-control" pattern="[0-9]*">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="row">
+            <div class="col-xs-8">
+                {% block login_form_links %}
+                {% endblock %}
+            </div>
+            <div class="col-xs-4">
+                <button type="submit" class="btn btn-primary btn-block btn-flat">Entra</button>
+            </div>
+        </div>
+    </form>
+    <div class="social-auth-links text-center">
+        <p><span id="msgbox" style="display:none"></span></p>
+        <br><br>
+        <a href="#" id="bt2" class="btn btn-block btn-social btn-google btn-flat" style="display: block;"> Pin smarrito ?
+        </a>                
+    </div>
+{% endblock login_form %}

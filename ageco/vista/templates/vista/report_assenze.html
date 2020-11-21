@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load vista_extras %}
+{% load static %}
+
+
+{% block stylesheets %}
+    {{ block.super }}
+
+    <!--<link rel="stylesheet" type="text/css" href="{% static '/vista/public/css/griglia.css' %}">-->
+{% endblock %}
+
+{% block extra_head %}
+{{ block.super }}
+{% endblock %}
+
+{% block title %}Report Assenze{% endblock %}
+{% block content %}  
+    <div class="">      
+        <div class="box box-primary">
+            <div class="box-header with-border">           
+                <h3 class="box-title">Assenze dal servizio del
+                    {% if request.GET.data_servizio %} {{ request.GET.data_servizio|str_to_data|date:"j F Y l"|upper }} 
+                    {% else %} {% now "j F Y l" as data %} {{ data|upper }}
+                    {% endif %}.                        
+                </h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>                                             
+            </div>
+            
+            <div class="box-body table-responsive ">
+                <div class="row">
+                    <style type="text/css">
+                        /* .table-responsive { max-height:1000px; }*/
+                    </style>
+                    <div id="fogliodiv" class="col-md-12">
+                        <table id="fogliotable" class="table table-hover ">            
+                            <thead>
+                                <tr class="bg-gray">
+                                    <th style="width: 10px">#</th>
+                                    <th>QUALIFICA</th>
+                                    <th>COGNOME</th>
+                                    <th>TURNO</th>
+                                    <th>ORARIO</th>
+                                    <th>MOTIVO</th>
+                                    <th>NOTE</th>                                    
+                                </tr>
+                            </thead>                
+                            <tbody>
+                                {% for obj in filter.qs %}
+                                    <tr>                                
+                                        <td style="color:gray">{{ forloop.counter0 }}</td>
+                                        <td>OP/ESER.</td>
+                                        <td>{{ obj.operatore }}</td>
+                                        <td>{{ obj.linea }}{% if obj.treno != '0' %} / {{ obj.treno }}{% endif %} </td>                                                  
+                                        <td>{{ obj.ora_inizio }}</td>
+                                        <td>-</td>
+                                        <td>{% if obj.note != null %} {{ obj.note }}{% endif %}</td>                                                                              
+                                    </tr>
+                                {% empty %}
+                                    <tr><td colspan="5">Nessun assente.</td></tr>
+                                {% endfor %}                                           
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+
+        <div class="box box-primary"> <!-- filtro -->
+            <div class="box-header with-border">
+                <h3 class="box-title">Impostazioni</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+            <!-- form start -->
+            <form role="form" method="get">
+                <div class="box-body">
+                    {{ filter.form.non_field_errors }}
+                    <div class="row">
+                        <div class="form-group">                            
+                            <div class="col-md-4 ">{{ filter.form.data_servizio.label_tag }}{{ filter.form.data_servizio }}</div>                             
+                        </div>
+                    </div>                
+                    <div class="row">                        
+                        {{ filter.form.data_servizio.errors }}                    
+                    </div>                    
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary col-xs-6 pull-right">Aggiorna</button>
+                </div>       
+                </form>
+            </div>
+            <!-- /.box-body -->
+        </div>            
+    </div>  
+{% endblock %}
+
+{% block extra_foot %}
+{{ block.super }} 
+{{ filter.form.media }}
+{% endblock %}

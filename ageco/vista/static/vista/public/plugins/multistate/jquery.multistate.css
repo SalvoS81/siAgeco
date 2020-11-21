@@ -1,0 +1,55 @@
+.mltsm-wrapper {display: none;}
+.mltsm-target {cursor: pointer; display: inline-block; width: 100%;}
+.mltsm-grid {/*position:absolute;*/ left:50px; top:50px; z-index:5000; -khtml-user-select: none; padding:10px; width: initial;}
+/*.mltsm-overlay {z-index:4999; top:0; left:0; right:0; bottom:1px; position: absolute;}*/
+input.mltsm-display {padding: 1px; min-width: 4em;}
+.mltsm-row th { padding: 1px; }
+.mltsm-foot td { text-align: center; padding: 2px; }
+.mltsm-grid th {text-align: center; padding: 1px;}
+
+.multistatetext-selected{
+  border-color: yellow !important;
+  border-width: thick !important;
+}
+.multistatetext{
+  cursor: pointer;
+  text-align: center;
+  line-height: 2.5em;
+  width: 2.5em;
+  border: 0.1em green solid;
+}
+.multistatetext-R{
+  background-color: #00a65a !important;
+  color: #fff !important;
+  opacity: .90;
+}
+.multistatetext-M{
+  background-color: #dd4b39 !important;
+  color: #fff !important;
+  opacity: .90;
+}
+.multistatetext-S{
+  background-color: #3c8dbc !important;
+  color: #fff !important;
+  opacity: .90;
+}
+/* FROM HTTP://WWW.GETBOOTSTRAP.COM
+     * Glyphicons
+     *
+     * Special styles for displaying the icons and their classes in the docs.
+     */
+.glyphicon.removebtn {
+  color: rgba(255, 0, 0, 0.61);
+  font-size: 1.8em;
+  cursor: pointer;
+  line-height: inherit;
+  position: inherit;
+}
+.bs-glyphicons.removerow{
+  padding: 0.1em;
+  text-align: center;
+  width: 2.5em;
+}
+.bs-glyphicons.removerow:hover {
+  background-color: rgba(86, 61, 124, .1);
+}
