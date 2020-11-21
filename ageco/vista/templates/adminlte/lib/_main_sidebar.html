@@ -1,0 +1,113 @@
+{% extends 'adminlte/lib/_main_sidebar.html' %}
+{% load adminlte_helpers %}
+{% load vista_extras %}
+
+
+{% block user_panel %}
+<div class="user-panel">
+    <div class="pull-left image">
+        <img src="{% avatar_url size=90 %}" class="img-circle" alt="User Image">
+    </div>
+    <div class="pull-left info">
+        {% if user.is_authenticated %}                    
+                {% if request.user.persona_set.first.operatore_set.first is not null %}
+                    <p>{{ request.user.persona_set.first.operatore_set.first }} ({{ request.user.persona_set.first.operatore_set.first.parametro }})</p>
+                {% else %}
+                    <p>{% firstof request.user.get_full_name request.user.username %}</p>                            
+                {% endif %}
+            <a href="{% url 'logout'%}?next={{request.path}}">Logout</a>
+        {% else %}
+            <p>(Ospite)</p>
+            <a href="{% url 'login'%}?next={{request.path}}">Login</a>
+        {% endif %} 
+        
+    </div>
+</div>
+{% endblock %}
+
+{% block form %}{% endblock %}
+
+<!-- sidebar menu: : style can be found in sidebar.less -->
+{% block nav_links_ul %}
+<ul class="sidebar-menu">
+    {% block nav_links_outer %}
+        <li class="header">{% block nav_heading %}MENU{% endblock %}</li>
+        {% block nav_links %}                    
+            {% if request.user|is_addetto_esercizio %}             
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fa fa-th"></i> <span>Generale</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'foglio_servizio' %}">
+                        <i class="fa fa-list-alt"></i> <span>Foglio Servizio</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'griglia_polo' %}">
+                        <i class="fa fa-list-ol"></i> <span>Griglia Polo</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-bar-chart"></i> <span>POSIZIONE</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="{% url 'report_assenze' %}">
+                                <i class="fa fa-user"></i> Assenza Dal Servizio
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-user"></i> Foglio Straordinari
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-user"></i> Mancanza Vetture
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-user"></i> Situazione Personale E Treni
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-user"></i> Smonte Anticipate
+                            </a>
+                        </li>
+                    </ul>  
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-user"></i> Uscita Del Servizio
+                            </a>
+                        </li>
+                    </ul>                    
+                </li>
+            {% endif %}
+            {% if request.user|is_operatore_esercizio %}             
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fa fa-th"></i> <span>Home</span>
+                    </a>
+                </li>                
+            {% endif %}
+        {% endblock nav_links %}
+    {% endblock nav_links_outer %}
+</ul>
+{% endblock nav_links_ul %}
