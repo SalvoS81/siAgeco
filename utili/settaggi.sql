@@ -15,15 +15,21 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 SET SQL_SAFE_UPDATES = 0;
 UPDATE ageco_new.ageco_db_manager_turnoprogrammato AS t
-SET t.data = '2020-11-15'
-WHERE t.data = '2020-09-06';
+SET t.data = '2020-11-25'
+WHERE t.data = '2020-11-18';
 UPDATE ageco_new.ageco_db_manager_turnoprogrammato AS t
-SET t.data = '2020-11-16'
-WHERE t.data = '2020-09-07';
+SET t.data = '2020-11-26'
+WHERE t.data = '2020-11-17';
 UPDATE ageco_new.ageco_db_manager_turnoprogrammato AS t
-SET t.data = '2020-11-17'
-WHERE t.data = '2020-09-08';
+SET t.data = '2020-11-27'
+WHERE t.data = '2020-11-16';
 UPDATE ageco_new.ageco_db_manager_turnoprogrammato AS t
-SET t.data = '2020-11-18'
-WHERE t.data = '2020-09-09';
+SET t.data = '2020-11-28'
+WHERE t.data = '2020-11-15';
+SET SQL_SAFE_UPDATES = 1;
+
+SET SQL_SAFE_UPDATES = 0;
+UPDATE ageco_new.ageco_db_manager_turnoeffettivo AS t
+SET t.data = '2020-11-25'
+WHERE t.data = '2020-11-18';
 SET SQL_SAFE_UPDATES = 1;

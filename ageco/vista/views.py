@@ -39,7 +39,7 @@ def foglio_servizio(request):
     request.session['polo'] = request.GET.get('polo',"")
     request.session['tipologia'] = request.GET.get('tipologia',"")
     request.session['data_servizio'] = request.GET.get('data_servizio',"")
-    request.session['scostamento'] = request.GET.get('scostamento',"")  #test
+    request.session['scostamento'] = request.GET.get('scostamento', 0)  #test
 
     turni_list = TurnoProgrammato.objects.all().order_by('nastro__ora_inizio')
     turni_filter = FoglioServizioFilter(request.GET, request=request, queryset=turni_list)
