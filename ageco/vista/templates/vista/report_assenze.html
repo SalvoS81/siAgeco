@@ -52,9 +52,9 @@
                                         <td style="color:gray">{{ forloop.counter0 }}</td>
                                         <td>OP/ESER.</td>
                                         <td>{{ obj.operatore }}</td>
-                                        <td>{{ obj.linea }}{% if obj.treno != '0' %} / {{ obj.treno }}{% endif %} </td>                                                  
-                                        <td>{{ obj.ora_inizio }}</td>
-                                        <td>-</td>
+                                        <td>{{ obj.nastro.linea }}{% if obj.nastro.treno != '0' %} / {{ obj.nastro.treno }}{% endif %} </td>                                                  
+                                        <td>{{ obj.nastro.ora_inizio }}</td>
+                                        <td>{{ obj.stato }}</td>
                                         <td>{% if obj.note != null %} {{ obj.note }}{% endif %}</td>                                                                              
                                     </tr>
                                 {% empty %}

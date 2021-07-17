@@ -128,7 +128,7 @@ def report_assenze(request):
     request.session['data_servizio'] = request.GET.get('data_servizio',"")
     
     data = datetime.datetime.strptime(request.session['data_servizio'], '%d/%m/%Y')
-    assenze_list = TurnoEffettivo.objects.all().filter(Q(data=data), Q(stato='7') | Q(stato='8')).order_by('ora_inizio')
+    assenze_list = TurnoProgrammato.objects.all().filter(Q(data=data), Q(stato='7') | Q(stato='8'))
     assenze_filter = AssenzeFilter(request.GET, request=request, queryset=assenze_list)
    
     return render(request, 'vista/report_assenze.html', {'filter': assenze_filter, })
