@@ -14,7 +14,7 @@ from pathlib import Path, PurePath
 import os
 
 try:
-   from my_local_settings import *
+   from local_settings import *
 except ImportError:
     raise Exception("A local_settings.py file is required to run this project")
 
