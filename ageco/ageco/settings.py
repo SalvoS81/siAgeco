@@ -91,10 +91,17 @@ WSGI_APPLICATION = 'ageco.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+B_PATH = os.path.join(BASE_DIR, 'db.sqlite3')
+try:
+    from shutil import copyfile
+    DB_PATH = "/tmp/db.sqlite3"
+    copyfile(os.path.join(BASE_DIR, 'db.sqlite3'), DB_PATH)
+except:
+    pass
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': DB_PATH,
     }
 }
 
