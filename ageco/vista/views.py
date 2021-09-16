@@ -39,13 +39,13 @@ def foglio_servizio(request):
     request.session['polo'] = request.GET.get('polo',"")
     request.session['tipologia'] = request.GET.get('tipologia',"")
     request.session['data_servizio'] = request.GET.get('data_servizio',"")
-    request.session['scostamento'] = request.GET.get('scostamento', 0)  #test
+    request.session['scostamento'] = request.GET.get('scostamento', "0")  #test
 
     turni_list = TurnoProgrammato.objects.all().order_by('nastro__ora_inizio')
     turni_filter = FoglioServizioFilter(request.GET, request=request, queryset=turni_list)
     riserve = turni_filter.qs.filter(Q(nastro__tipologia='Riserva') | Q(stato__stato='Inoperoso'))
     servizio = turni_filter.qs.filter(nastro__tipologia='Servizio')
-    form_scostamento = ScostamentoForm(request.GET)
+    form_scostamento = ScostamentoForm(request.session) #request.GET)
     return render(request, 'vista/foglio_servizio.html', {'filter': turni_filter, 'servizio': servizio, 'riserve': riserve, 'form_scostamento': form_scostamento})
 
 @login_required
@@ -71,7 +71,11 @@ def griglia_polo(request):
     griglia_list = TurnoProgrammato.objects.all().filter(nastro__tipologia='Servizio').order_by('nastro__linea', 'nastro__treno' , 'nastro__ora_inizio')
     griglia_filter = GrigliaFilter(request.GET, request=request, queryset=griglia_list)
 
-    data = datetime.datetime.strptime(request.session['data_servizio'], '%d/%m/%Y')
+    if not isinstance(griglia_filter.data['data_servizio'], datetime.date):
+        data = datetime.datetime.strptime(griglia_filter.data['data_servizio'], '%d/%m/%Y')
+    else:
+        data = griglia_filter.data['data_servizio'].strftime('%Y-%m-%d')
+
     turnieffettivi_list = TurnoEffettivo.objects.all().filter(Q(data=data) | Q(linea__polo=request.session['polo'])).order_by('linea', 'treno' , 'ora_inizio') #| Q(linea=request.session['linea']))
     
     return render(request, 'vista/griglia_polo.html', {'filter': griglia_filter, 'turnieffettivi': turnieffettivi_list})

@@ -113,3 +113,5 @@ Pipfile*
 !**/migrations/__init__.py
 
 static/
+
+ageco/db copia.sqlite3
